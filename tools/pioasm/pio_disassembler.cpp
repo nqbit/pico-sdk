@@ -20,7 +20,7 @@ extern "C" void disassemble(char *buf, int buf_len, uint16_t inst,
 std::string disassemble(uint16_t inst, uint sideset_bits_including_opt,
                         bool sideset_opt) {
   std::stringstream ss;
-  uint major = inst >> 13u;
+  uint major = static_cast<uint>(inst) >> 13u;
   uint arg1 = static_cast<uint>(inst >> 5u) & 0x7u;
   uint arg2 = inst & 0x1fu;
   auto op = [&](const std::string &s) { ss << std::left << std::setw(7) << s; };
