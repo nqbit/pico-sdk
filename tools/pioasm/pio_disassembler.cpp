@@ -165,7 +165,7 @@ std::string disassemble(uint16_t inst, uint sideset_bits_including_opt,
   if (invalid) {
     return "reserved";
   }
-  uint delay = ((uint)inst >> 8u) & 0x1f;
+  uint delay = static_cast<uint>(inst >> 8u) & 0x1f;
   ss << std::left << std::setw(7);
   if (sideset_bits_including_opt && (!sideset_opt || (delay & 0x10u))) {
     ss << ("side " + std::to_string((delay & (sideset_opt ? 0xfu : 0x1fu)) >>
