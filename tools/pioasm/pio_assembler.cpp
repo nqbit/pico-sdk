@@ -329,12 +329,12 @@ int pio_assembler::write_output() {
                        return f->name;
                    });
 
-    compiled_source source;
-    source.global_symbols = public_symbols(get_dummy_global_program());
+    compiled_source c_source;
+    c_source.global_symbols = public_symbols(get_dummy_global_program());
     for (auto &program : programs) {
         program.finalize();
-        source.programs.emplace_back(compiled_source::program(program.name));
-        auto &cprogram = source.programs[source.programs.size() - 1];
+        c_source.programs.emplace_back(compiled_source::program(program.name));
+        auto &cprogram = c_source.programs[c_source.programs.size() - 1];
         cprogram = compiled_source::program(program.name);
 
         // encode the instructions
@@ -378,7 +378,7 @@ int pio_assembler::write_output() {
     if (programs.empty()) {
         std::cout << "warning: input contained no programs" << std::endl;
     }
-    return format->output(dest, options, source);
+    return format->output(dest, options, c_source);
 }
 
 FILE *output_format::open_single_output(std::string destination) {
